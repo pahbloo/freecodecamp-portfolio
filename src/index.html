@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="normalize.css" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Pablo Marques' freeCodeCamp Portfolio</title>
+  </head>
+  <body>
+    <nav id="navbar">
+      <ul>
+        <li><a href="#welcome-section">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <section id="welcome-section">
+      <h1>Pablo Marques' freeCodeCamp Portfolio</h1>
+      <p>
+        Hello world! This is my portfolio of freeCodeCamp projects. It is also
+        <a
+          href="https://www.freecodecamp.org/learn/responsive-web-design/responsive-web-design-projects/build-a-personal-portfolio-webpage"
+        >
+          a freeCodeCamp project
+        </a>
+        itself. You can see all of my FCC certifications on
+        <a
+          id="profile-link"
+          href="https://www.freecodecamp.org/pahbloo"
+          target="_blank"
+        >
+          my freeCodeCamp profile </a
+        >.
+      </p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <!-- This div is populated at build -->
+      <div id="project-tiles"></div>
+      <!-- End of project-tiles div -->
+    </section>
+
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <script>
+      const projectName = "portfolio";
+    </script>
+  </body>
+</html>

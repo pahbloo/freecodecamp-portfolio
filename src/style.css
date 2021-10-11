@@ -1,0 +1,43 @@
+body {
+  background-color: #f5f6f7;
+  color: #1b1b32;
+  font-family: Lato, sans-serif;
+}
+
+#navbar {
+  background-color: #0a0a23;
+  color: #fff;
+  display: flex;
+  font-family: "Roboto Mono", monospace;
+  justify-content: flex-end;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+@media (max-height: 300px) {
+  #navbar {
+    position: inherit;
+  }
+}
+
+#navbar li {
+  display: inline;
+}
+
+#navbar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#navbar a:hover {
+  background-color: #fff;
+  color: #0a0a23;
+}
+
+#welcome-section {
+  display: grid;
+  height: 100vh;
+  place-content: center;
+}
