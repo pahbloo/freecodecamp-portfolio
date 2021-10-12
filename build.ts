@@ -19,3 +19,8 @@ try {
 console.log("Fetching data from GitHub...");
 //TODO
 console.log("Data from GitHub fetched.");
+
+let index = await Deno.readTextFile("./src/index.html");
+const projectTile = await Deno.readTextFile("./src/project-tile.html");
+index = index.replace("{{project-tiles}}", projectTile);
+await Deno.writeTextFile("./dist/index.html", index);
