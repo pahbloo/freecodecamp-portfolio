@@ -17,7 +17,16 @@ try {
 }
 
 console.log("Fetching data from GitHub...");
-//TODO
+const projectsFile = await Deno.readTextFile("./src/projects.json");
+const projectsList: string[] = JSON.parse(projectsFile);
+const projectsResponses = await Promise.all(
+  projectsList.map((repo) =>
+    fetch(`https://api.github.com/repos/pahbloo/${repo}`)
+  ),
+);
+const projectsRepos = await Promise.all(
+  projectsResponses.map((response) => response.json()),
+);
 console.log("Data from GitHub fetched.");
 
 let index = await Deno.readTextFile("./src/index.html");
