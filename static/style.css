@@ -1,3 +1,7 @@
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #f5f6f7;
   color: #1b1b32;
@@ -16,7 +20,7 @@ body {
   width: 100%;
 }
 
-@media (max-height: 300px) {
+@media (max-height: 20em) {
   #navbar {
     position: inherit;
   }
@@ -28,6 +32,7 @@ body {
 
 #navbar a {
   color: #fff;
+  padding: 1em .5em;
   text-decoration: none;
 }
 
