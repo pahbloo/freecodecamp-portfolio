@@ -24,12 +24,28 @@ const projectsResponses = await Promise.all(
     fetch(`https://api.github.com/repos/pahbloo/${repo}`)
   ),
 );
-const projectsRepos = await Promise.all(
+const projects = await Promise.all(
   projectsResponses.map((response) => response.json()),
 );
+if (projects[projects.length - 1].message?.startsWith("API rate limit")) {
+  throw new Error("GitHub API rate limit exceeded.");
+}
 console.log("Data from GitHub fetched.");
 
+console.log("Building index.html...");
+let projectTiles = "";
+const projectTileTemplate = await Deno.readTextFile("./src/project-tile.html");
+
+for (const project of projects) {
+  let projectTile = projectTileTemplate;
+  projectTile = projectTile.replace("{{project-link}}", project.html_url);
+  projectTile = projectTile.replace("{{project-title}}", project.name);
+  projectTile = projectTile.replace("{{description}}", project.description);
+  projectTiles += projectTile;
+}
+
 let index = await Deno.readTextFile("./src/index.html");
-const projectTile = await Deno.readTextFile("./src/project-tile.html");
-index = index.replace("{{project-tiles}}", projectTile);
+index = index.replace("{{project-tiles}}", projectTiles);
 await Deno.writeTextFile("./dist/index.html", index);
+console.log("index.html built.");
+console.log("THE END.");
