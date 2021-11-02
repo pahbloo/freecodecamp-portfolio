@@ -8,6 +8,14 @@ body {
   font-family: Lato, sans-serif;
 }
 
+a {
+  color:#1b1b32;
+}
+
+a:hover {
+  background-color: #1b1b3250;
+}
+
 #navbar {
   background-color: #0a0a23;
   color: #fff;
@@ -44,5 +52,16 @@ body {
 #welcome-section {
   display: grid;
   height: 100vh;
+  margin: auto;
+  max-width: 50em;
+  padding: 1em;
   place-content: center;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+#welcome-section p {
+  font-size: 1.6em;
 }
