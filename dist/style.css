@@ -1,0 +1,67 @@
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f5f6f7;
+  color: #1b1b32;
+  font-family: Lato, sans-serif;
+}
+
+a {
+  color:#1b1b32;
+}
+
+a:hover {
+  background-color: #1b1b3250;
+}
+
+#navbar {
+  background-color: #0a0a23;
+  color: #fff;
+  display: flex;
+  font-family: "Roboto Mono", monospace;
+  justify-content: flex-end;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+@media (max-height: 20em) {
+  #navbar {
+    position: inherit;
+  }
+}
+
+#navbar li {
+  display: inline;
+}
+
+#navbar a {
+  color: #fff;
+  padding: 1em .5em;
+  text-decoration: none;
+}
+
+#navbar a:hover {
+  background-color: #fff;
+  color: #0a0a23;
+}
+
+#welcome-section {
+  display: grid;
+  height: 100vh;
+  margin: auto;
+  max-width: 50em;
+  padding: 1em;
+  place-content: center;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+#welcome-section p {
+  font-size: 1.6em;
+}
