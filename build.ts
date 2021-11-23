@@ -14,7 +14,7 @@ async function copyStaticFiles() {
   }
 }
 
-async function getProjects() {
+async function fetchRepoData() {
   const projectsFile = await Deno.readTextFile("./src/projects.json");
   const projectsList: string[] = JSON.parse(projectsFile);
   const projectsResponses = await Promise.all(
@@ -28,7 +28,8 @@ async function getProjects() {
   if (projects[projects.length - 1].message?.startsWith("API rate limit")) {
     throw new Error("GitHub API rate limit exceeded.");
   }
-
+  await emptyDir("./cache");
+  await Deno.writeTextFile("./cache/projects.json", JSON.stringify(projects));
   return projects;
 }
 
@@ -64,7 +65,7 @@ await copyStaticFiles();
 console.log("Static files copied.");
 
 console.log("Fetching data from GitHub...");
-const projects = await getProjects();
+const projects = await fetchRepoData();
 console.log("Data from GitHub fetched.");
 
 console.log("Building index.html...");
