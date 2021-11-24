@@ -14,9 +14,35 @@ async function copyStaticFiles() {
   }
 }
 
-async function fetchRepoData() {
-  const projectsFile = await Deno.readTextFile("./src/projects.json");
-  const projectsList: string[] = JSON.parse(projectsFile);
+async function getCache(projectsList: string[]): Promise<false | GitHubRepo[]> {
+  try {
+    const cache = JSON.parse(
+      await Deno.readTextFile(
+        "./cache/projects.json",
+      ),
+    );
+
+    if (projectsList.length !== cache.projectsList.length) return false;
+    if (
+      !projectsList.every((project) =>
+        cache.projectsList.indexOf(project) !== -1
+      )
+    ) {
+      return false;
+    }
+
+    const now = new Date().valueOf();
+    const createdAt = new Date(cache.createdAt).valueOf();
+    if (now - createdAt > 60 * 60 * 1000) return false;
+
+    console.log("Data retrieved from cache.");
+    return cache.projects;
+  } catch (_) {
+    return false;
+  }
+}
+
+async function fetchRepoData(projectsList: string[]) {
   const projectsResponses = await Promise.all(
     projectsList.map((repo) =>
       fetch(`https://api.github.com/repos/pahbloo/${repo}`)
@@ -29,7 +55,14 @@ async function fetchRepoData() {
     throw new Error("GitHub API rate limit exceeded.");
   }
   await emptyDir("./cache");
-  await Deno.writeTextFile("./cache/projects.json", JSON.stringify(projects));
+  const cache = {
+    createdAt: new Date(),
+    projectsList,
+    projects,
+  };
+  await Deno.writeTextFile("./cache/projects.json", JSON.stringify(cache));
+
+  console.log("Data retrieved from GitHub. (Cache updated.)");
   return projects;
 }
 
@@ -64,9 +97,12 @@ console.log("Copying static files...");
 await copyStaticFiles();
 console.log("Static files copied.");
 
-console.log("Fetching data from GitHub...");
-const projects = await fetchRepoData();
-console.log("Data from GitHub fetched.");
+const projectsFile = await Deno.readTextFile("./src/projects.json");
+const projectsList: string[] = JSON.parse(projectsFile);
+
+console.log("Getting projects data...");
+const projects = await getCache(projectsList) ||
+  await fetchRepoData(projectsList);
 
 console.log("Building index.html...");
 await buildPage(projects);
